@@ -1,0 +1,59 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,600');
+@import '../../node_modules/jeet/jeet';
+@include debug;
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: 'Open Sans', sans-serif;
+  font-size: 15px;
+  color: rgb(73,73,73);
+}
+
+*, .body {
+  background-color: transparent;
+}
+
+.App {
+  height: 100vh;
+  width: 100vw;
+}
+
+.Selector {
+  @include column(1/5, $gutter: 0);
+  height: 100%;
+  background: rgb(73,73,73);
+  display: block;
+  .Selector--main {
+    h3 { color: rgb(250,250,250); }
+    padding: 1rem .5rem;
+  }
+  .select--dropdown {
+    background: rgba(250,250,250,1);
+    margin-top: .5rem;
+    border: none;
+    font-size: 12px;
+    heigth: 2rem;
+    width: 7rem;
+    margin-right: .5rem;
+    &:active, &:focus {
+      outline: 0
+    }
+  }
+  .select--input {
+    background: rgba(250,250,250,1);
+    margin-top: .5rem;
+    font-size: 11px;
+    padding: .18rem .3rem;
+    border-radius: 2px;
+    border: 1px solid #fff;
+    &:active, &:focus {
+      outline: 0
+    }
+  }
+}
+
+.Visualization {
+  background-color: rgb(230,230,230);
+}
