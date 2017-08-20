@@ -9,13 +9,12 @@ class Selector extends Component {
         <div className="select--section select--sub-header">
           <h4>Select a User or Country</h4>
         </div>
-        <div className="select--section">
+        <div className="select--section select--form--top">
           <div className='form__label'>
             <h4>User Stats</h4>
           </div>
           <div className="select--form--ui">
           <form className="form">
-            <div className="form__section">
             <select className="form__control form__control--small" name="select--user"
               onChange={(e) => {
               }}>
@@ -24,10 +23,10 @@ class Selector extends Component {
               <option value="giblet">giblet</option>
               <option value="sawan">Sawan Shariadr</option>
             </select>
-            </div>
-            <div className="form__section">
-            <input/>
-            </div>
+            <input type="submit" value="Submit"
+              className="button button--base-raised-light button--small"
+              name="input-user"
+              onClick={(e) => {}}/>
           </form>
           </div>
         </div>
@@ -57,7 +56,7 @@ class Selector extends Component {
             <img className="project--link--logo"
               src="assets/graphics/layout/devseed-logo-symbol.svg" />
             <h3><a href="https://github.com/AmericanRedCross/osm-stats-api">
-             <mark>osm-stats-api <span className="uisi-github"></span></mark>
+             <mark>osm-stats-api <span className="uisi-github icon"></span></mark>
          </a></h3>
           </div>
         </div>
