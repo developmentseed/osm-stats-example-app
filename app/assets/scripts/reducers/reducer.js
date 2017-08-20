@@ -34,7 +34,29 @@ const missingmapsCountries = (state = {countries: [], fetching: false, fetched: 
   return state;
 };
 
+const userSuggestorFilter = (state = {username: ''}, action) => {
+  switch (action.type) {
+    case actions.UPDATE_USERS_SUGGESTOR:
+      state = cloneDeep(state);
+      state.username = action.username;
+      break;
+  }
+  return state;
+};
+
+const countrySuggestorFilter = (state = {countryname: ''}, action) => {
+  switch (action.type) {
+    case actions.UPDATE_COUNTRIES_SUGGESTOR:
+      state = cloneDeep(state);
+      state.countryname = action.countryname;
+      break;
+  }
+  return state;
+};
+
 export default combineReducers({
   missingmapsUsers,
-  missingmapsCountries
+  missingmapsCountries,
+  userSuggestorFilter,
+  countrySuggestorFilter
 });

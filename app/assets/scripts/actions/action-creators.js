@@ -65,3 +65,27 @@ export function fetchCountries () {
       });
   };
 }
+
+// ////////////////////////////////////////////////////////////////
+//                       USERS SUGGESTOR                         //
+// ////////////////////////////////////////////////////////////////
+
+export function updateUserSuggestor (text) {
+  return {
+    type: actions.UPDATE_USERS_SUGGESTOR,
+    username: text,
+    recievedAt: Date.now()
+  };
+}
+
+// ////////////////////////////////////////////////////////////////
+//                       COUNTRY SUGGESTOR                       //
+// ////////////////////////////////////////////////////////////////
+
+export function updateCountrySuggestor (text) {
+  return {
+    type: actions.UPDATE_COUNTRIES_SUGGESTOR,
+    countryname: text,
+    recievedAt: Date.now()
+  };
+}

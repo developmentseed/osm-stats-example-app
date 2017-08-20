@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import { updateUserSuggestor, updateCountrySuggestor } from '../actions/action-creators';
+import { connect } from 'react-redux';
+
 class Selector extends Component {
   render () {
     return (
@@ -10,7 +13,11 @@ class Selector extends Component {
           <div className="select--form--ui">
             <h3>Find a user</h3>
             <div className="form__input-group">
-              <input type="text" id="inputText5" name="inputText5" className="form__control form__control--medium" placeholder="Input text">
+              <input
+                type="text"
+                className="form__control form__control--medium"
+                placeholder="username"
+                onChange={(e) => { this.props._updateUserSuggestor(e.target.value); }}>
               </input>
               <div className="form__input-addon">
                 <button type="button" className="button button--primary-raised-dark button--text-hidden button--medium" title="Delete fieldset"><i className="uisi-magnifier-right icon"></i><span>Delete</span></button>
@@ -22,7 +29,11 @@ class Selector extends Component {
           <div className="select--form--ui">
             <h3>Find a country</h3>
             <div className="form__input-group">
-              <input type="text" id="inputText5" name="inputText5" className="form__control" placeholder="Input text">
+              <input
+                type="text"
+                className="form__control"
+                placeholder="country name"
+                onChange={(e) => { this.props._updateCountrySuggestor(e.target.value); }}>
               </input>
               <div className="form__input-addon">
                 <button type="button" className="button button--primary-raised-dark button--text-hidden" title="Delete fieldset"><i className="uisi-magnifier-right icon"></i><span>Delete</span></button>
@@ -44,4 +55,15 @@ class Selector extends Component {
   }
 }
 
-export default Selector;
+const selector = (state) => {
+  return {};
+};
+
+const dispatcher = (dispatch) => {
+  return {
+    _updateUserSuggestor: (text) => dispatch(updateUserSuggestor(text)),
+    _updateCountrySuggestor: (text) => dispatch(updateCountrySuggestor(text))
+  };
+};
+
+export default connect(selector, dispatcher)(Selector);
