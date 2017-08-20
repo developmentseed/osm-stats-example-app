@@ -43,7 +43,7 @@
 		}
 	}
 	.form__control {
-		width: 5rem;
+		width: 8rem;
 	}
 	.project--link {
 		display: inline-block;
@@ -51,9 +51,12 @@
 			display: inline-block;
 			vertical-align: middle;
 	 	}
+		mark {
+			font-size: 9px;
+		}
 		.project--link--logo {
-			width: 27px;
-			margin-right: .5rem;
+			width: 25px;
+			margin-right: .4rem;
 		}
 		.icon {
 			margin-bottom: .2rem;
@@ -67,6 +70,9 @@
 	@media (min-width: 800px) {
 		height: 100%;
 		@include column(1/5, $gutter: 0);
+		form__control {
+			width: 5rem;
+		}
 	}
 }
 

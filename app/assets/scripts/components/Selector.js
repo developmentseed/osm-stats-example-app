@@ -7,7 +7,7 @@ class Selector extends Component {
           <h1>osm-stats-api analysis</h1>
         </div>
         <div className="select--section select--sub-header">
-          <h4>Select a User or Country</h4>
+          <h4>Type a User or Country name</h4>
         </div>
         <div className="select--section select--form--top">
           <div className='form__label'>
@@ -51,7 +51,6 @@ class Selector extends Component {
           </div>
         </div>
         <div className="select--section select--bottom">
-          <div className="select--break" />
           <div className="project--link">
             <img className="project--link--logo"
               src="assets/graphics/layout/devseed-logo-symbol.svg" />

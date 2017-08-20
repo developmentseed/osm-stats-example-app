@@ -77,9 +77,13 @@
   },
   "dependencies": {
     "d3": "^4.10.0",
+    "isomorphic-fetch": "^2.2.1",
     "jeet": "^7.1.0",
+    "lodash": "^4.17.4",
     "lodash.defaultsdeep": "^4.6.0",
+    "prop-types": "^15.5.10",
     "react": "^15.6.1",
+    "react-autosuggest": "^9.3.2",
     "react-dom": "^15.6.1",
     "react-redux": "^5.0.6",
     "redux": "^3.7.2",
