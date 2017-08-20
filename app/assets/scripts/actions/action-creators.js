@@ -89,3 +89,23 @@ export function updateCountrySuggestor (text) {
     recievedAt: Date.now()
   };
 }
+
+// ////////////////////////////////////////////////////////////////
+//                        USERS SUGGESTION                       //
+// ////////////////////////////////////////////////////////////////
+
+export function updateUsersSuggestions (json) {
+  return {
+    type: actions.UPDATE_USERS_SUGGESTIONS,
+    json: json,
+    recievedAt: Date.now()
+  };
+}
+
+export function updateCountriesSuggestions (json) {
+  return {
+    type: actions.UPDATE_COUNTRIES_SUGGESTIONS,
+    json: json,
+    recievedAt: Date.now()
+  };
+}

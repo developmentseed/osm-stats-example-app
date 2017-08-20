@@ -15,33 +15,11 @@ class App extends Component {
         </div>
         <div className="Visualization">
           <Visualization/>
+          <Suggestor />
         </div>
-        <Suggestor />
       </div>
     );
   }
 }
-
-//  Connect! //
-// const selector = (state) => {
-//   return {
-//     users: state.missingmapsUsers,
-//     countries: state.missingmapsCountries
-//   };
-// };
-
-// const dispatcher = (dispatch) => {
-//   return {
-//     _fetchUsers: () => dispatch(fetchUsers()),
-//     _fetchCountries: () => dispatch(fetchCountries())
-//   };
-// };
-//
-// // set PropTypes //
-// App.PropTypes = {
-//   _fetchUsers: PropTypes.func
-// };
-//
-// export default connect(selector, dispatcher)(App);
 
 export default App;
