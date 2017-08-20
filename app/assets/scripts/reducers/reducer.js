@@ -5,7 +5,6 @@ import { cloneDeep } from 'lodash';
 const missingmapsUsers = (state = {users: [], fetching: false, fetched: false}, action) => {
   switch (action.type) {
     case actions.REQUEST_USERS:
-      // make copy of state...do this in each instance
       state = cloneDeep(state);
       state.fetching = true;
       break;
@@ -22,7 +21,6 @@ const missingmapsUsers = (state = {users: [], fetching: false, fetched: false}, 
 const missingmapsCountries = (state = {countries: [], fetching: false, fetched: false}, action) => {
   switch (action.type) {
     case actions.REQUEST_COUNTRIES:
-      // make copy of state...do this in each instance
       state = cloneDeep(state);
       state.fetching = true;
       break;
