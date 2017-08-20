@@ -18,14 +18,6 @@ class Selector extends Component {
             <div className="form__section">
             <select className="form__control form__control--small" name="select--user"
               onChange={(e) => {
-                let target;
-                let select;
-                if (e.target.name) {
-                  target = e.target.name;
-                  select = e.target;
-                  select = select.options[select.options.selectedIndex].value;
-                }
-                this.props.setFilter([target, select])
               }}>
               <option></option>
               <option value="piaco">piaco_dk</option>
@@ -34,12 +26,7 @@ class Selector extends Component {
             </select>
             </div>
             <div className="form__section">
-            <input
-              className="button button--base-raised-light button--small"
-              type="submit"
-              value="Submit"
-              name="input--user"
-              onClick={(e) => {this.props.setOffViz(e.target.name)}}/>
+            <input/>
             </div>
           </form>
           </div>
@@ -51,15 +38,7 @@ class Selector extends Component {
           <div className="select--form--ui">
             <form className="form">
               <select ref="countryDropdown" className="form__control form__control--small" name="select--country"
-                onChange={(e) => {
-                  let target;
-                  let select;
-                  if (e.target.name) {
-                    target = e.target.name;
-                    select = e.target;
-                    select = select.options[select.options.selectedIndex].value;
-                  }
-                  this.props.setFilter([target, select]) }}>
+                onChange={(e) => {}}>
                 <option></option>
                 <option value="nga">Nigeria</option>
                 <option value="moz">Mozambique</option>
@@ -68,8 +47,7 @@ class Selector extends Component {
               <input type="submit" value="Submit"
                 className="button button--base-raised-light button--small"
                 name="input-country"
-                onClick={(e) => {
-                  this.props.setOffViz(e.target.name)}}/>
+                onClick={(e) => {}}/>
             </form>
           </div>
         </div>
