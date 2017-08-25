@@ -100,5 +100,5 @@ export default combineReducers({
   countrySuggestorFilter,
   lastTyped,
   currentSuggestions,
-  suggestionsUpdating
+  suggestionsUpdating,
 });

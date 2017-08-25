@@ -1,11 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { filter, map } from 'async';
-import {
-  fetchUsers,
-  fetchCountries,
-  updateSuggestions
- } from '../actions/action-creators';
+import { updateSuggestions } from '../actions/action-creators';
 
 class Suggestor extends Component {
   constructor (props) {
@@ -20,28 +16,20 @@ class Suggestor extends Component {
       this.props._updateSuggestions([]);
     }
     filter(suggestables, (suggestable, truth) => {
-      this._setUpdating(true);
       return truth(null, suggestable[Object.keys(suggestable)[key]].toLowerCase().slice(0, inputLen) === inputVal);
     }, (err, filterResults) => {
       if (err) {
-        this._setUpdating(false);
         return this.props._updateSuggestions([]);
       }
       map(filterResults, (result, truth) => {
         return truth(null, result.name);
       }, (err, mappedResults) => {
         if (err) {
-          this._setUpdating(false);
           return this.props._updateSuggestions([]);
         }
-        this._setUpdating(false);
         return this.props._updateSuggestions(mappedResults);
       });
     });
-  }
-  componentDidMount () {
-    this.props._fetchUsers();
-    this.props._fetchCountries();
   }
   componentDidUpdate (prevProps, prevState) {
     if (prevProps.userFilter !== this.props.userFilter) {
@@ -61,7 +49,6 @@ class Suggestor extends Component {
   }
   render () {
     return (
-      {this.props.suggestionsUpdating}
       <section className="panel">
         <header className="panel__header">
           <h1 className="panel__title">{this.props.lastTyped}</h1>
@@ -105,8 +92,6 @@ const selector = (state) => {
 
 const dispatcher = (dispatch) => {
   return {
-    _fetchUsers: () => dispatch(fetchUsers()),
-    _fetchCountries: () => dispatch(fetchCountries()),
     _updateSuggestions: (suggestions) => dispatch(updateSuggestions(suggestions))
   };
 };
