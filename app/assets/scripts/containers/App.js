@@ -15,7 +15,7 @@ class App extends Component {
         </div>
         <div className="Visualization">
           <Visualization/>
-          <Suggestor />
+          <Suggestor className="Suggestor"/>
         </div>
       </div>
     );

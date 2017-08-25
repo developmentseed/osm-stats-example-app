@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
-import { updateUserSuggestor, updateCountrySuggestor } from '../actions/action-creators';
+import {
+  setlastTyped,
+  updateUserSuggestor,
+  updateCountrySuggestor
+} from '../actions/action-creators';
 import { connect } from 'react-redux';
 
 class Selector extends Component {
@@ -17,7 +21,10 @@ class Selector extends Component {
                 type="text"
                 className="form__control form__control--medium"
                 placeholder="username"
-                onChange={(e) => { this.props._updateUserSuggestor(e.target.value); }}>
+                onChange={(e) => {
+                  this.props._updateUserSuggestor(e.target.value);
+                  this.props._setLastTyped('users');
+                }}>
               </input>
               <div className="form__input-addon">
                 <button type="button" className="button button--primary-raised-dark button--text-hidden button--medium" title="Delete fieldset"><i className="uisi-magnifier-right icon"></i><span>Delete</span></button>
@@ -33,7 +40,10 @@ class Selector extends Component {
                 type="text"
                 className="form__control"
                 placeholder="country name"
-                onChange={(e) => { this.props._updateCountrySuggestor(e.target.value); }}>
+                onChange={(e) => {
+                  this.props._updateCountrySuggestor(e.target.value);
+                  this.props._setLastTyped('countries');
+                }}>
               </input>
               <div className="form__input-addon">
                 <button type="button" className="button button--primary-raised-dark button--text-hidden" title="Delete fieldset"><i className="uisi-magnifier-right icon"></i><span>Delete</span></button>
@@ -61,6 +71,7 @@ const selector = (state) => {
 
 const dispatcher = (dispatch) => {
   return {
+    _setLastTyped: (text) => dispatch(setlastTyped(text)),
     _updateUserSuggestor: (text) => dispatch(updateUserSuggestor(text)),
     _updateCountrySuggestor: (text) => dispatch(updateCountrySuggestor(text))
   };

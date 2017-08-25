@@ -1,6 +1,7 @@
+import React from 'react';
 import { combineReducers } from 'redux';
 import * as actions from '../actions/action-types';
-import { cloneDeep } from 'lodash';
+import { cloneDeep, includes } from 'lodash';
 
 // ////////////////////////////////////////////////////////////////
 //                         API-DATA                              //
@@ -52,16 +53,6 @@ const userSuggestorFilter = (state = {username: ''}, action) => {
   return state;
 };
 
-const userSuggestions = (state = {userSuggestions: []}, action) => {
-  switch (action.type) {
-    case actions.UPDATE_USERS_SUGGESTIONS:
-      state = cloneDeep(state);
-      state = action.json.map(user => user.name);
-      break;
-  }
-  return state;
-};
-
 const countrySuggestorFilter = (state = {countryname: ''}, action) => {
   switch (action.type) {
     case actions.UPDATE_COUNTRIES_SUGGESTOR:
@@ -72,11 +63,31 @@ const countrySuggestorFilter = (state = {countryname: ''}, action) => {
   return state;
 };
 
-const countrySuggestions = (state = {countrySuggestions: []}, action) => {
+const currentSuggestions = (state = {currentSuggestions: ['']}, action) => {
   switch (action.type) {
-    case actions.UPDATE_COUNTRIES_SUGGESTIONS:
+    case actions.UPDATE_SUGGESTIONS:
       state = cloneDeep(state);
-      state = action.json
+      state.currentSuggestions = action.json;
+      break;
+  }
+  return state;
+};
+
+const lastTyped = (state = {lastTyped: ''}, action) => {
+  switch (action.type) {
+    case actions.SET_LAST_TYPED_SUGGESTION:
+      state = cloneDeep(state);
+      state.lastTyped = action.text;
+      break;
+  }
+  return state;
+};
+
+const suggestionsUpdating = (state = {suggestionsUpdating: false}, action) => {
+  switch (action.type) {
+    case actions.SET_SUGGESTIONS_UPDATING:
+      state = cloneDeep(state);
+      state.suggestionsUpdating = action.bool;
       break;
   }
   return state;
@@ -86,7 +97,8 @@ export default combineReducers({
   missingmapsUsers,
   missingmapsCountries,
   userSuggestorFilter,
-  userSuggestions,
   countrySuggestorFilter,
-  countrySuggestions
+  lastTyped,
+  currentSuggestions,
+  suggestionsUpdating
 });

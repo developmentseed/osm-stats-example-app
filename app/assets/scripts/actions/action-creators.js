@@ -91,21 +91,37 @@ export function updateCountrySuggestor (text) {
 }
 
 // ////////////////////////////////////////////////////////////////
-//                        USERS SUGGESTION                       //
+//                     UPDATE SUGGESTIOR                         //
 // ////////////////////////////////////////////////////////////////
 
-export function updateUsersSuggestions (json) {
+export function updateSuggestions (json) {
   return {
-    type: actions.UPDATE_USERS_SUGGESTIONS,
+    type: actions.UPDATE_SUGGESTIONS,
     json: json,
     recievedAt: Date.now()
   };
 }
 
-export function updateCountriesSuggestions (json) {
+// ////////////////////////////////////////////////////////////////
+//                            LAST TYPED                         //
+// ////////////////////////////////////////////////////////////////
+
+export function setlastTyped (text) {
   return {
-    type: actions.UPDATE_COUNTRIES_SUGGESTIONS,
-    json: json,
+    type: actions.SET_LAST_TYPED_SUGGESTION,
+    text: text,
     recievedAt: Date.now()
+  };
+}
+
+// ////////////////////////////////////////////////////////////////
+//                             UPDATING                          //
+// ////////////////////////////////////////////////////////////////
+
+export function setSuggestionsUpdating (bool) {
+  return {
+    type: actions.SET_SUGGESTIONS_UPDATING,
+    bool: bool,
+    receivedAt: Date.now()
   };
 }
