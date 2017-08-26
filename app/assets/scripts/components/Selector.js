@@ -3,7 +3,8 @@ import ReactLoading from 'react-loading';
 import {
   setlastTyped,
   updateUserSuggestor,
-  updateCountrySuggestor
+  updateCountrySuggestor,
+  setSuggestor
 } from '../actions/action-creators';
 import { connect } from 'react-redux';
 
@@ -23,7 +24,7 @@ class Selector extends Component {
                         type="text"
                         className="form__control form__control--medium"
                         placeholder="username"
-                        onClick={(e) => { console.log(e); }}
+                        onClick={(e) => { this.props._setSuggestor(true); }}
                         onChange={(e) => {
                           this.props._updateUserSuggestor(e.target.value);
                           this.props._setLastTyped('users');
@@ -45,6 +46,7 @@ class Selector extends Component {
                     type="text"
                     className="form__control"
                     placeholder="country name"
+                    onClick={(e) => { this.props._setSuggestor(true); }}
                     onChange={(e) => {
                       this.props._updateCountrySuggestor(e.target.value);
                       this.props._setLastTyped('countries');
@@ -99,6 +101,7 @@ const selector = (state) => {
 
 const dispatcher = (dispatch) => {
   return {
+    _setSuggestor: (bool) => dispatch(setSuggestor(bool)),
     _setLastTyped: (text) => dispatch(setlastTyped(text)),
     _updateUserSuggestor: (text) => dispatch(updateUserSuggestor(text)),
     _updateCountrySuggestor: (text) => dispatch(updateCountrySuggestor(text))

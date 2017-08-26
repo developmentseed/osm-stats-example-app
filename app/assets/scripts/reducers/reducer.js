@@ -84,7 +84,7 @@ const lastTyped = (state = {lastTyped: ''}, action) => {
 };
 
 // ////////////////////////////////////////////////////////////////
-//                    GENERATE STATS                             //
+//                       GENERATE STATS                          //
 // ////////////////////////////////////////////////////////////////
 
 const stats = (state = {countryStats: [], userStats: [], statsFetched: false, fetching: false, fetched: false}, action) => {
@@ -117,6 +117,20 @@ const stats = (state = {countryStats: [], userStats: [], statsFetched: false, fe
   return state;
 };
 
+// ////////////////////////////////////////////////////////////////
+//                 VISUALIZATION/SUGGESTOR LOGIC                 //
+// ////////////////////////////////////////////////////////////////
+
+const setSuggestor = (state = {setSuggestor: false}, action) => {
+  switch (action.type) {
+    case actions.SET_SUGGESTOR:
+      state = cloneDeep(state);
+      state.resetSuggestor = action.bool;
+      break;
+  }
+  return state;
+};
+
 export default combineReducers({
   missingmapsUsers,
   missingmapsCountries,
@@ -124,5 +138,6 @@ export default combineReducers({
   countrySuggestorFilter,
   lastTyped,
   currentSuggestions,
-  stats
+  stats,
+  setSuggestor
 });

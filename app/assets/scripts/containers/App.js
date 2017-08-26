@@ -15,10 +15,13 @@ class App extends Component {
     this.props._fetchCountries();
   }
   render () {
-    console.log(this);
     const showVisualizationSuggestor = () => {
       if (this.props.countriesFetched && this.props.usersFetched) {
-        if (!(this.props.statsFetched)) {
+        if (!this.props.statsFetched) {
+          return (
+            <Suggestor className="Suggestor"/>
+          );
+        } else if (this.props.setSuggestor) {
           return (
             <Suggestor className="Suggestor"/>
           );
@@ -45,7 +48,8 @@ const selector = (state) => {
   return {
     countriesFetched: state.missingmapsCountries.fetched,
     usersFetched: state.missingmapsUsers.fetched,
-    statsFetched: state.stats.statsFetched
+    statsFetched: state.stats.statsFetched,
+    setSuggestor: state.setSuggestor.setSuggestor
   };
 };
 

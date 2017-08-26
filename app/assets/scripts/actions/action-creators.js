@@ -135,13 +135,13 @@ function recieveUserStats (json) {
 
 export function fetchUserStats (userName) {
   return (dispatch) => {
-    dispatch(requestUserStats())
+    dispatch(requestUserStats());
     generateUserStats(config.api, userName, (err, stats) => {
       if (!err) {
-        dispatch(recieveUserStats(stats))
+        dispatch(recieveUserStats(stats));
       }
-    })
-  }
+    });
+  };
 }
 
 function requestCountryStats () {
@@ -166,5 +166,17 @@ export function fetchCountryStats (countryCode) {
         dispatch(recieveCountryStats(stats));
       }
     });
+  };
+}
+
+// ////////////////////////////////////////////////////////////////
+//                 VISUALIZATION/SUGGESTOR LOGIC                 //
+// ////////////////////////////////////////////////////////////////
+
+export function setSuggestor (bool) {
+  return {
+    type: actions.SET_SUGGESTOR,
+    bool: bool,
+    receivedAt: Date.now()
   };
 }
