@@ -19,12 +19,21 @@
   background: rgb(73,73,73);
   .Selector--main {
 		padding: 1rem .5rem;
-    h3, h4, h1, .icon, mark {
+    h1, h3, h4, h5, .icon, mark {
 			color: rgb(250,250,250);
 		}
 		h3, h4 {
 			line-height: 1.2rem;
 			margin: .4rem 0 ;
+		}
+		.select--loading {
+			* {
+				display: inline-block;
+			}
+			.select--loading-svg {
+				margin: 1rem 0 0 .8rem;
+				vertical-align: middle;
+			}
 		}
   }
 	.project--link {
@@ -54,7 +63,7 @@
 	}
 }
 
-.Visualization {
+.main {
   background-color: rgb(230,230,230);
 	@media (min-width: 800px) {
 		@include column(4/5, $gutter: 0);
