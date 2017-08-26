@@ -15,15 +15,16 @@ class App extends Component {
     this.props._fetchCountries();
   }
   render () {
+    console.log(this);
     const showVisualizationSuggestor = () => {
       if (this.props.countriesFetched && this.props.usersFetched) {
-        if (!(this.props.visualization)) {
+        if (!(this.props.statsFetched)) {
           return (
-            <Suggestor/>
+            <Suggestor className="Suggestor"/>
           );
         }
         return (
-          <Visualization/>
+          <Visualization className='Visualization'/>
         );
       }
     };
@@ -32,7 +33,7 @@ class App extends Component {
         <div className="Selector">
           <Selector/>
         </div>
-        <div className="Visualization">
+        <div className="main">
           {showVisualizationSuggestor()}
         </div>
       </div>
@@ -43,14 +44,15 @@ class App extends Component {
 const selector = (state) => {
   return {
     countriesFetched: state.missingmapsCountries.fetched,
-    usersFetched: state.missingmapsUsers.fetched
+    usersFetched: state.missingmapsUsers.fetched,
+    statsFetched: state.stats.statsFetched
   };
 };
 
 const dispatcher = (dispatch) => {
   return {
     _fetchUsers: () => dispatch(fetchUsers()),
-    _fetchCountries: () => dispatch(fetchCountries()),
+    _fetchCountries: () => dispatch(fetchCountries())
   };
 };
 

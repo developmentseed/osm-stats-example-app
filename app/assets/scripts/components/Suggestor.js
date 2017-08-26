@@ -1,12 +1,18 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { filter, map } from 'async';
-import { updateSuggestions } from '../actions/action-creators';
+import { filter, detect } from 'async';
+import {
+  updateSuggestions,
+  fetchCountryStats,
+  fetchUserStats
+ } from '../actions/action-creators';
+import ScrollArea from 'react-scrollbar';
 
 class Suggestor extends Component {
   constructor (props) {
     super(props);
     this.getSuggestion = this.getSuggestion.bind(this);
+    this.getStatsParam = this.getStatsParam.bind(this);
   }
   // find item(s) in list with either country name or user name slice matching slice typed
   getSuggestion (filterable, suggestables, key) {
@@ -21,14 +27,21 @@ class Suggestor extends Component {
       if (err) {
         return this.props._updateSuggestions([]);
       }
-      map(filterResults, (result, truth) => {
-        return truth(null, result.name);
-      }, (err, mappedResults) => {
-        if (err) {
-          return this.props._updateSuggestions([]);
+      return this.props._updateSuggestions(filterResults);
+    });
+  }
+  // finds and dispatches to fetchCountryStats the selected country's code
+  getStatsParam (param) {
+    detect(this.props[this.props.lastTyped], (country, truth) => {
+      truth(null, country.name === param);
+    }, (err, foundParam) => {
+      if (!err) {
+        if (this.props.lastTyped === 'countries') {
+          return this.props._fetchCountryStats(foundParam.code);
+        } else {
+          return this.props._fetchUserStats(foundParam.name);
         }
-        return this.props._updateSuggestions(mappedResults);
-      });
+      }
     });
   }
   componentDidUpdate (prevProps, prevState) {
@@ -55,22 +68,32 @@ class Suggestor extends Component {
         </header>
         <div className="scrollarea panel__body">
           <div className="scrollarea-inner">
-            <ul className="suggestions--list" style={
-              {
-                'list-style-type': 'none',
-                'font-size': '18px',
-                'padding': '1rem'
-              }
-            }>
-              {this.props.currentSuggestions.map((suggestion, i) => {
-                return <li key={i} style={{
-                'margin': '.1rem 0'
-                }}><a onClick={(e) => { console.log(e.target.textContent); }}><mark style={{
-                  background: 'rgba(207, 63, 2, 0.30)',
-                  padding: '.2rem .3rem'
-                }}>{suggestion}</mark></a></li>;
-              })}
-            </ul>
+            <ScrollArea
+              scroll={1}
+              style={{'max-height': '20rem'}}
+              className='panel__body'
+              contentClassName='panel__body-inner'
+              smoothScrolling={true}
+              horizontal={false} >
+              <ul className="suggestions--list" style={
+                {
+                  'list-style-type': 'none',
+                  'font-size': '18px',
+                  'padding': '1rem'
+                }
+              }>
+                {this.props.currentSuggestions.map((suggestion, i) => {
+                  return <li key={i} style={{
+                  'margin': '.1rem 0'
+                  }}><a onClick={(e) => {
+                    this.getStatsParam(e.target.textContent);
+                  }}><mark style={{
+                    background: 'rgba(207, 63, 2, 0.30)',
+                    padding: '.2rem .3rem'
+                  }}>{suggestion.name}</mark></a></li>;
+                })}
+              </ul>
+            </ScrollArea>
           </div>
         </div>
       </section>
@@ -85,14 +108,15 @@ const selector = (state) => {
     countryFilter: state.countrySuggestorFilter.countryname,
     userFilter: state.userSuggestorFilter.username,
     lastTyped: state.lastTyped.lastTyped,
-    currentSuggestions: state.currentSuggestions.currentSuggestions,
-    suggestionsUpdating: state.suggestionsUpdating.suggestionsUpdating
+    currentSuggestions: state.currentSuggestions.currentSuggestions
   };
 };
 
 const dispatcher = (dispatch) => {
   return {
-    _updateSuggestions: (suggestions) => dispatch(updateSuggestions(suggestions))
+    _updateSuggestions: (suggestions) => dispatch(updateSuggestions(suggestions)),
+    _fetchCountryStats: (countryCode) => dispatch(fetchCountryStats(countryCode)),
+    _fetchUserStats: (userId) => dispatch(fetchUserStats(userId))
   };
 };
 // export default Suggestor;

@@ -83,11 +83,35 @@ const lastTyped = (state = {lastTyped: ''}, action) => {
   return state;
 };
 
-const suggestionsUpdating = (state = {suggestionsUpdating: false}, action) => {
+// ////////////////////////////////////////////////////////////////
+//                    GENERATE STATS                             //
+// ////////////////////////////////////////////////////////////////
+
+const stats = (state = {countryStats: [], userStats: [], statsFetched: false, fetching: false, fetched: false}, action) => {
   switch (action.type) {
-    case actions.SET_SUGGESTIONS_UPDATING:
+    case actions.REQUEST_COUNTRY_STATS:
       state = cloneDeep(state);
-      state.suggestionsUpdating = action.bool;
+      state.fetching = true;
+      state.statsFetched = false;
+      break;
+    case actions.RECEIVE_COUNTRY_STATS:
+      state = cloneDeep(state);
+      state.countryStats = action.json;
+      state.fetching = false;
+      state.fetched = true;
+      state.statsFetched = true;
+      break;
+    case actions.REQUEST_USER_STATS:
+      state = cloneDeep(state);
+      state.fetching = true;
+      state.statsFetched = false;
+      break;
+    case actions.RECEIVE_USER_STATS:
+      state = cloneDeep(state);
+      state.userStats = action.json;
+      state.fetching = false;
+      state.fetched = true;
+      state.statsFetched = true;
       break;
   }
   return state;
@@ -100,5 +124,5 @@ export default combineReducers({
   countrySuggestorFilter,
   lastTyped,
   currentSuggestions,
-  suggestionsUpdating,
+  stats
 });

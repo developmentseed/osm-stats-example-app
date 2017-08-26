@@ -1,6 +1,7 @@
 import fetch from 'isomorphic-fetch';
 import * as actions from './action-types';
 import config from '../config';
+import { generateCountryStats, generateUserStats } from '../lib/generateStats';
 
 // ////////////////////////////////////////////////////////////////
 //                             USERS                             //
@@ -115,13 +116,55 @@ export function setlastTyped (text) {
 }
 
 // ////////////////////////////////////////////////////////////////
-//                             UPDATING                          //
+//                          FETCH STATS                          //
 // ////////////////////////////////////////////////////////////////
 
-export function setSuggestionsUpdating (bool) {
+function requestUserStats () {
   return {
-    type: actions.SET_SUGGESTIONS_UPDATING,
-    bool: bool,
+    type: actions.REQUEST_USER_STATS
+  };
+}
+
+function recieveUserStats (json) {
+  return {
+    type: actions.RECEIVE_USER_STATS,
+    json: json,
     receivedAt: Date.now()
+  };
+}
+
+export function fetchUserStats (userName) {
+  return (dispatch) => {
+    dispatch(requestUserStats())
+    generateUserStats(config.api, userName, (err, stats) => {
+      if (!err) {
+        dispatch(recieveUserStats(stats))
+      }
+    })
+  }
+}
+
+function requestCountryStats () {
+  return {
+    type: actions.REQUEST_COUNTRY_STATS
+  };
+}
+
+function recieveCountryStats (json) {
+  return {
+    type: actions.RECEIVE_COUNTRY_STATS,
+    json: json,
+    receivedAt: Date.now()
+  };
+}
+
+export function fetchCountryStats (countryCode) {
+  return (dispatch) => {
+    dispatch(requestCountryStats());
+    generateCountryStats(config.api, countryCode, (err, stats) => {
+      if (!err) {
+        dispatch(recieveCountryStats(stats));
+      }
+    });
   };
 }

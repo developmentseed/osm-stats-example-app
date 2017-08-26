@@ -63,7 +63,7 @@
 	}
 }
 
-.Visualization {
+.main {
   background-color: rgb(230,230,230);
 	@media (min-width: 800px) {
 		@include column(4/5, $gutter: 0);

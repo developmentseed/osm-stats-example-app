@@ -23,6 +23,7 @@ class Selector extends Component {
                         type="text"
                         className="form__control form__control--medium"
                         placeholder="username"
+                        onClick={(e) => { console.log(e); }}
                         onChange={(e) => {
                           this.props._updateUserSuggestor(e.target.value);
                           this.props._setLastTyped('users');
@@ -60,11 +61,11 @@ class Selector extends Component {
       } else {
         return (
           <div className='select--loading'>
-            <h3>Loading Users and Countries..</h3>
+            <h3>Loading Users and Countries</h3>
             <ReactLoading
               className='select--loading-svg'
               type={'spinningBubbles'} color={'rgb(250,250,250)'}
-              heigth= '30' width='35' />
+              width='35' />
           </div>
         );
       }
