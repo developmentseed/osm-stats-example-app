@@ -87,30 +87,28 @@ const lastTyped = (state = {lastTyped: ''}, action) => {
 //                       GENERATE STATS                          //
 // ////////////////////////////////////////////////////////////////
 
-const stats = (state = {countryStats: [], userStats: [], statsFetched: false, fetching: false, fetched: false}, action) => {
+const stats = (state = {countryStats: [], userStats: [], statsFetched: false, statsFetching: false, fetched: false}, action) => {
   switch (action.type) {
     case actions.REQUEST_COUNTRY_STATS:
       state = cloneDeep(state);
-      state.fetching = true;
+      state.statsFetching = true;
       state.statsFetched = false;
       break;
     case actions.RECEIVE_COUNTRY_STATS:
       state = cloneDeep(state);
       state.countryStats = action.json;
-      state.fetching = false;
-      state.fetched = true;
+      state.statsFetching = false;
       state.statsFetched = true;
       break;
     case actions.REQUEST_USER_STATS:
       state = cloneDeep(state);
-      state.fetching = true;
+      state.statsFetching = true;
       state.statsFetched = false;
       break;
     case actions.RECEIVE_USER_STATS:
       state = cloneDeep(state);
       state.userStats = action.json;
-      state.fetching = false;
-      state.fetched = true;
+      state.statsFetching = false;
       state.statsFetched = true;
       break;
   }
@@ -125,7 +123,7 @@ const setSuggestor = (state = {setSuggestor: false}, action) => {
   switch (action.type) {
     case actions.SET_SUGGESTOR:
       state = cloneDeep(state);
-      state.resetSuggestor = action.bool;
+      state.setSuggestor = action.bool;
       break;
   }
   return state;

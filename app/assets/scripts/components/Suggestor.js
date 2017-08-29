@@ -4,7 +4,8 @@ import { filter, detect } from 'async';
 import {
   updateSuggestions,
   fetchCountryStats,
-  fetchUserStats
+  fetchUserStats,
+  setSuggestor
  } from '../actions/action-creators';
 import ScrollArea from 'react-scrollbar';
 
@@ -75,6 +76,7 @@ class Suggestor extends Component {
               contentClassName='panel__body-inner'
               smoothScrolling={true}
               horizontal={false} >
+              <div className='panel__body-inner-left'>
               <ul className="suggestions--list" style={
                 {
                   'list-style-type': 'none',
@@ -87,12 +89,16 @@ class Suggestor extends Component {
                   'margin': '.1rem 0'
                   }}><a onClick={(e) => {
                     this.getStatsParam(e.target.textContent);
+                    this.props._setSuggestor(false);
                   }}><mark style={{
                     background: 'rgba(207, 63, 2, 0.30)',
                     padding: '.2rem .3rem'
                   }}>{suggestion.name}</mark></a></li>;
                 })}
               </ul>
+              </div>
+              <div className='panel__body-inner-right'>
+              </div>
             </ScrollArea>
           </div>
         </div>
@@ -116,7 +122,8 @@ const dispatcher = (dispatch) => {
   return {
     _updateSuggestions: (suggestions) => dispatch(updateSuggestions(suggestions)),
     _fetchCountryStats: (countryCode) => dispatch(fetchCountryStats(countryCode)),
-    _fetchUserStats: (userId) => dispatch(fetchUserStats(userId))
+    _fetchUserStats: (userId) => dispatch(fetchUserStats(userId)),
+    _setSuggestor: (bool) => dispatch(setSuggestor(bool))
   };
 };
 // export default Suggestor;

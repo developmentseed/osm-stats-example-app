@@ -25,11 +25,11 @@ export function generateCountryStats (baseURL, countryCode, cb) {
       stats = stats.map((group) => {
         let edits = ((Number(group.all_edits) / totalEdits) * 100).toFixed(2);
         return {
-          group: group.hashtag,
-          all_edits: edits
+          code: group.hashtag,
+          edits: edits
         };
       }).sort((a, b) => {
-        return b.all_edits - a.all_edits;
+        return b.edits - a.edits;
       });
       cb(null, stats);
     }

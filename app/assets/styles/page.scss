@@ -65,6 +65,12 @@
 
 .main {
   background-color: rgb(230,230,230);
+	.Suggestor {
+		.panel__body-inner-left,
+		.panel__body-inner-right {
+			@include column(1/2, $gutter: 0);
+		}
+	}
 	@media (min-width: 800px) {
 		@include column(4/5, $gutter: 0);
 	}

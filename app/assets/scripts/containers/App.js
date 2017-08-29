@@ -17,11 +17,7 @@ class App extends Component {
   render () {
     const showVisualizationSuggestor = () => {
       if (this.props.countriesFetched && this.props.usersFetched) {
-        if (!this.props.statsFetched) {
-          return (
-            <Suggestor className="Suggestor"/>
-          );
-        } else if (this.props.setSuggestor) {
+        if (!this.props.statsFetched || this.props.setSuggestor) {
           return (
             <Suggestor className="Suggestor"/>
           );
