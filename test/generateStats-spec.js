@@ -60,10 +60,22 @@ describe('generateCountryStats', function () {
         const requestMatchPercEdits = ((Number(requestMatch.all_edits) / totalEdits) * 100).toFixed(2);
         // if the code and hashtag are the same (as they hsould if requestMatch holds a val)
         // AND edits and all edits match, return.
-        return functionStat.edits === requestMatchPercEdits;
+        return functionStat.edits === requestMatchPercEdits && functionStat.code === requestMatch.hashtag;
       });
+      // expect each functionStat object to have an object in the raw api
+      // with both the same code and perc of edits.
       expect(everyRequestStatMatches).to.be.equal(true);
+      // get sum of % edits from function stats
+      const editsSum = functionStats.reduce((a, b) => { return a + Number(b.edits); }, 0).toFixed(0);
+      // expect editsSum to equal 100
+      expect(Number(editsSum)).to.be.equal(100);
       cb();
     });
   });
 });
+
+// describe('generateUserStats', function () {
+//   it(`should return an array with a user's edits across countries the user has mapped in`, function (cb) {
+  
+//   })
+// }) 
