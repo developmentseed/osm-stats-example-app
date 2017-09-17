@@ -15,8 +15,8 @@
     "serve": "DS_ENV=development gulp serve",
     "build": "DS_ENV=production NODE_ENV=production gulp",
     "stage": "DS_ENV=staging NODE_ENV=staging gulp",
-    "lint": "eslint app/assets/scripts/ --ext .js",
-    "test": "echo \"No tests\" && exit 0"
+    "lint": "eslint app/assets/scripts/ --ext .js && eslint ./test/ --ext .js",
+    "test": "mocha test/*"
   },
   "browserify": {
     "transform": [
@@ -40,11 +40,14 @@
     "babelify": "^7.3.0",
     "browser-sync": "^2.18.8",
     "browserify": "^14.1.0",
+    "chai": "^4.1.2",
     "del": "^2.2.2",
     "envify": "^4.0.0",
     "eslint": "^3.18.0",
     "eslint-config-standard": "^7.1.0",
+    "eslint-plugin-mocha": "^4.11.0",
     "eslint-plugin-promise": "^3.5.0",
+    "eslint-plugin-react": "^7.3.0",
     "eslint-plugin-standard": "^2.1.1",
     "gulp": "^3.9.1",
     "gulp-cache": "^0.4.6",
@@ -62,6 +65,7 @@
     "gulp-uglify": "^2.1.2",
     "gulp-useref": "^3.1.2",
     "gulp-util": "^3.0.8",
+    "mocha": "^3.5.3",
     "node-bourbon": "^4.2.8",
     "node-notifier": "^5.1.2",
     "node-sass": "^4.5.1",

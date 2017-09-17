@@ -1,7 +1,7 @@
 import fetch from 'isomorphic-fetch';
 import * as actions from './action-types';
 import config from '../config';
-import { generateCountryStats, generateUserStats } from '../lib/generateStats';
+import { generateCountryStats, generateUserStats } from '../utils/generateStats';
 
 // ////////////////////////////////////////////////////////////////
 //                             USERS                             //
