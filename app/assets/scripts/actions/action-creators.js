@@ -7,6 +7,8 @@ import { generateCountryStats, generateUserStats } from '../utils/generateStats'
 //                             USERS                             //
 // ////////////////////////////////////////////////////////////////
 
+// below actions fetch list of users from osm stats api
+
 function requestUsers () {
   return {
     type: actions.REQUEST_USERS
@@ -38,6 +40,8 @@ export function fetchUsers () {
 // ////////////////////////////////////////////////////////////////
 //                           COUNTRIES                           //
 // ////////////////////////////////////////////////////////////////
+
+// below actions fetch list of countries from osm stats api
 
 function requestCountries () {
   return {
@@ -71,6 +75,8 @@ export function fetchCountries () {
 //                       USERS SUGGESTOR                         //
 // ////////////////////////////////////////////////////////////////
 
+// updates current user suggestor, or the string used to filter users
+
 export function updateUserSuggestor (text) {
   return {
     type: actions.UPDATE_USERS_SUGGESTOR,
@@ -82,6 +88,8 @@ export function updateUserSuggestor (text) {
 // ////////////////////////////////////////////////////////////////
 //                       COUNTRY SUGGESTOR                       //
 // ////////////////////////////////////////////////////////////////
+
+// updates current country suggestor, or the string used to filter users
 
 export function updateCountrySuggestor (text) {
   return {
@@ -95,6 +103,8 @@ export function updateCountrySuggestor (text) {
 //                     UPDATE SUGGESTIOR                         //
 // ////////////////////////////////////////////////////////////////
 
+// updates suggestions
+
 export function updateSuggestions (json) {
   return {
     type: actions.UPDATE_SUGGESTIONS,
@@ -107,6 +117,8 @@ export function updateSuggestions (json) {
 //                            LAST TYPED                         //
 // ////////////////////////////////////////////////////////////////
 
+// sets last typed to either users or countries
+
 export function setlastTyped (text) {
   return {
     type: actions.SET_LAST_TYPED_SUGGESTION,
@@ -118,6 +130,8 @@ export function setlastTyped (text) {
 // ////////////////////////////////////////////////////////////////
 //                          FETCH STATS                          //
 // ////////////////////////////////////////////////////////////////
+
+// fetches either user or country stats.
 
 function requestUserStats () {
   return {
@@ -136,6 +150,8 @@ function recieveUserStats (json) {
 export function fetchUserStats (userName) {
   return (dispatch) => {
     dispatch(requestUserStats());
+    // utils function that queries osm stats api for user stats.
+    // details on what the stats are exist in the actual util's documentation
     generateUserStats(config.api, userName, (err, stats) => {
       if (!err) {
         dispatch(recieveUserStats(stats));
@@ -160,6 +176,8 @@ function recieveCountryStats (json) {
 
 export function fetchCountryStats (countryCode) {
   return (dispatch) => {
+    // utils function that queries osm stats api for coutry stats
+    // you guessed it, what is generated is told in the utils documetation
     dispatch(requestCountryStats());
     generateCountryStats(config.api, countryCode, (err, stats) => {
       if (!err) {
@@ -172,6 +190,9 @@ export function fetchCountryStats (countryCode) {
 // ////////////////////////////////////////////////////////////////
 //                 VISUALIZATION/SUGGESTOR LOGIC                 //
 // ////////////////////////////////////////////////////////////////
+
+// sets a boolean used to determine if visualization or suggestor should
+// be visualized
 
 export function setSuggestor (bool) {
   return {

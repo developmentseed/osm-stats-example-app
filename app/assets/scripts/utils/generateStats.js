@@ -1,3 +1,5 @@
+'use strict';
+
 var request = require('request');
 var parallel = require('async').parallel;
 var map = require('async').map;
@@ -87,19 +89,23 @@ exports.generateUserStats = function (baseURL, userName, cb) {
         // if a proper response map the returned list of objects to be
         // only a list of country codes.
         if (err || res.statusCode !== 200) {
+          return done('could not react osmstats api countries', []);
         }
+        let countries;
         try {
-          map(JSON.parse(body), (country, cb) => {
-            cb(null, country.code);
-          }, (err, mappedCountries) => {
-            if (!err) {
-              return done(null, mappedCountries);
-            }
-          });
-          // if there is an error, return an empty list
+          countries = JSON.parse(body);
         } catch (e) {
-          done('could not generate stats', []);
+          // if there is an error, return an empty list
+          return done('could not generate stats', []);
         }
+        map(countries, (country, cb) => {
+          cb(null, country.code);
+        }, (err, mappedCountries) => {
+          if (err) {
+            return done(null, []);
+          }
+          done(null, mappedCountries);
+        });
       });
     }
   ], (err, res) => {
@@ -112,18 +118,24 @@ exports.generateUserStats = function (baseURL, userName, cb) {
       next(null, userCountryStatsMaker(baseURL, countryCode, userName, headers));
     }, (err, countryStats) => {
       if (err) {
-        return cb(null, {});
+        return cb(null, []);
       }
       parallel(countryStats, (err, res) => {
-        if (err) {}
+        if (err) {
+          return cb(null, []);
+        }
         filter(res, (country, next) => {
           next(null, country.code);
         }, (err, res) => {
-          if (err) {}
+          if (err) {
+            return cb(null, []);
+          }
           map(res, (country, next) => {
             next(null, country.edits);
           }, (err, edits) => {
-            if (err) {}
+            if (err) {
+              return cb(null, []);
+            }
             const totalEdits = edits.reduce((a, b) => { return a + b; }, 0);
             map(res, (country, next) => {
               const userStat = {
@@ -132,8 +144,10 @@ exports.generateUserStats = function (baseURL, userName, cb) {
               };
               next(null, userStat);
             }, (err, userStats) => {
-              if (err) {}
-              cb(null, userStats.sort((a, b) => { return a.edits - b.edits; })); 
+              if (err) {
+                return cb(null, []);
+              }
+              cb(null, userStats.sort((a, b) => { return a.edits - b.edits; }));
             });
           });
         });
@@ -159,29 +173,30 @@ var userCountryStatsMaker = function (baseURL, countryCode, userName, headers) {
       url: countryStatsURL,
       headers: headers
     }, (err, res, body) => {
-      if (!err || res.statusCode === 200) {
-        let countryUsersStats;
-        // wrap json parse in a try catch in case the json is invalid.
-        try {
-          // countryUsersStats is an array of objects, each object representing a user's edits.
-          countryUsersStats = JSON.parse(body);
-        } catch (e) {
-          // when the json cannot be parsed, cb an empty array
-          return cb(`Could not parse country's json`, []);
-        }
-        // detect is the asnyc package's equivalent to array.prototype.find;
-        // https://caolan.github.io/async/docs.html#detect
-        // it is used here to 'detect' an object for ${userName} exists in the array.
-        detect(countryUsersStats, (user, next) => {
-          next(null, user.name === userName);
-        }, (err, countryUserStats) => {
-          if (err && !countryUserStats) {
-            return cb(null, null);      
-          }
-          // return an object with a code and edits k/v
-          cb(null, {code: countryCode, edits: Number(countryUserStats.all_edits)});
-        });
+      if (err || res.statusCode !== 200) {
+        return cb(null, []);
       }
+      let countryUsersStats;
+      // wrap json parse in a try catch in case the json is invalid.
+      try {
+        // countryUsersStats is an array of objects, each object representing a user's edits.
+        countryUsersStats = JSON.parse(body);
+      } catch (e) {
+      // when the json cannot be parsed, cb an empty array
+        return cb(`Could not parse country's json`, []);
+      }
+      // detect is the asnyc package's equivalent to array.prototype.find;
+      // https://caolan.github.io/async/docs.html#detect
+      // it is used here to 'detect' an object for ${userName} exists in the array.
+      detect(countryUsersStats, (user, next) => {
+        next(null, user.name === userName);
+      }, (err, mappedCountryUserStats) => {
+        if (err || !mappedCountryUserStats) {
+          return cb(null, null);      
+        }
+        // return an object with a code and edits k/v
+        cb(null, {code: countryCode, edits: Number(mappedCountryUserStats.all_edits)});
+      });
     });
   };
 };
