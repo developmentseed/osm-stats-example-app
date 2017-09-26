@@ -32,7 +32,6 @@ class Selector extends Component {
                         type="text"
                         className="form__control form__control--medium"
                         placeholder="username"
-                        {/* dispatch action that sets suggestor to true */}
                         onClick={(e) => { this.props._setSuggestor(true); }}
                         onChange={(e) => {
                           {/*

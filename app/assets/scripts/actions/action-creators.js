@@ -147,15 +147,14 @@ function recieveUserStats (json) {
   };
 }
 
-export function fetchUserStats (userName) {
+export function fetchUserStats (userId) {
   return (dispatch) => {
     dispatch(requestUserStats());
     // utils function that queries osm stats api for user stats.
     // details on what the stats are exist in the actual util's documentation
-    generateUserStats(config.api, userName, (err, stats) => {
-      if (!err) {
-        dispatch(recieveUserStats(stats));
-      }
+    generateUserStats(config.api, userId)
+    .then(stats => {
+      dispatch(recieveUserStats(stats));
     });
   };
 }
@@ -179,10 +178,9 @@ export function fetchCountryStats (countryCode) {
     // utils function that queries osm stats api for coutry stats
     // you guessed it, what is generated is told in the utils documetation
     dispatch(requestCountryStats());
-    generateCountryStats(config.api, countryCode, (err, stats) => {
-      if (!err) {
-        dispatch(recieveCountryStats(stats));
-      }
+    generateCountryStats(config.api, countryCode)
+    .then(stats => {
+      dispatch(recieveCountryStats(stats));
     });
   };
 }

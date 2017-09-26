@@ -95,6 +95,7 @@ const stats = (state = {countryStats: [], userStats: [], statsFetched: false, st
       state.statsFetched = false;
       break;
     case actions.RECEIVE_COUNTRY_STATS:
+      console.log(action.json);
       state = cloneDeep(state);
       state.countryStats = action.json;
       state.statsFetching = false;

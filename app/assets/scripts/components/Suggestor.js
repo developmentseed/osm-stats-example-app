@@ -61,7 +61,7 @@ class Suggestor extends Component {
         if (this.props.lastTyped === 'countries') {
           return this.props._fetchCountryStats(foundParam.code);
         } else {
-          return this.props._fetchUserStats(foundParam.name);
+          return this.props._fetchUserStats(foundParam.id);
         }
       }
     });

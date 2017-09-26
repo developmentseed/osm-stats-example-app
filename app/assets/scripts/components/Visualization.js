@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Bar } from 'nivo';
 import ReactLoading from 'react-loading';
-import PropTypes form 'prop-types;
+import PropTypes from 'prop-types';
 
 class Visualizaiton extends Component {
   render () {
